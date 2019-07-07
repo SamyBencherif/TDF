@@ -1,0 +1,23 @@
+
+# Here is a dummy program in the tdf format
+
+# This program does not correspond to any procedures
+# Only keywords, logic, and syntax are authentic.
+
+SET PRESSURIZER 1
+WAIT 2000ms
+SET PRESSURIZER 0
+
+ENSURE PRESSURE = 1000psi
+{IF FAIL
+  SET DEPRESSURIZER 1
+  WAIT 3000ms
+  TERMINATE
+}
+
+PROMPT "Pressure Ready. Commence defibrillation?"
+{WHEN YES
+}
+{WHEN NO
+}
+

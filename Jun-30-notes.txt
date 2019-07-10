@@ -1,0 +1,13 @@
+
+* Boot up time raspian.
+* Mini iso
+* digit display / raspian / com port / network
+
+my notes
+
+# tdf sim requires knowledge of hardware
+# ie I know about integral generic approach to hardware sim
+* altitude ; force
+* pressure ; flow
+[[ generic ]]
+

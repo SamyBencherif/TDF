@@ -22,7 +22,7 @@ Check out [`object-model.h`](https://github.com/SamyBencherif/TDF/blob/master/ob
 
 Peruse [`device-config.h`](https://github.com/SamyBencherif/TDF/blob/master/device-config.h) to gain an understanding of available test instructions / signals / modes / devices.
 
-Finally, and this one is important for low-level implementation. Have a look at [`device-ins.h`](](https://github.com/SamyBencherif/TDF/blob/master/device-ins.h) to see where hardware level code would go.
+Finally, and this one is important for low-level implementation. Have a look at [`device-ins.h`](https://github.com/SamyBencherif/TDF/blob/master/device-ins.h) to see where hardware level code would go.
 
 ### TODO / notes
 

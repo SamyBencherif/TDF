@@ -8,4 +8,7 @@ default main.c object-model.h device-config.h:
 	@sh compile.sh
 
 main:
-	$(CC) $(CFLAGS) main.c -o main
+	$(CC) $(CFLAGS) -o main main.c
+
+test-png:
+	$(CC) $(CFLAGS) -o test-png test-png.c -lpng

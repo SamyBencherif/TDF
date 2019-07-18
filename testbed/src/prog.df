@@ -4,13 +4,13 @@
 # This program does not correspond to any procedures
 # Only keywords, logic, and syntax are authentic.
 
-SET PRESSURIZER 1
+SET PRESSURIZER ON
 WAIT 2000ms
-SET PRESSURIZER 0
+SET PRESSURIZER OFF
 
 ENSURE PRESSURE = 1000psi
 {IF FAIL
-  SET DEPRESSURIZER 1
+  SET DEPRESSURIZER ON
   WAIT 3000ms
   TERMINATE
 }

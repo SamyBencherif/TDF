@@ -1,0 +1,28 @@
+
+- Documentation [4 hrs] [1 wk]
+
+Jul 21.
+
+- Refactor [4 hrs]
+- Object Model Standard [12 hrs]
+
+[ 3 weeks ]
+
+
+- TDF language standard [5 hrs]
+- Transpiler [30 hrs]
+
+[7 weeks]
+
+Oct 1.
+
+- Code Analysis Suite (Visuals Generation, Code Validation)
+- Shared Library
+- Embedded Interactions (firmware team)
+- Test Runtime Interface (OpenMCT related)
+  - gives information about test
+  - lets you pick test
+  - interaction with prompts
+
+
+Oct 6. Transpiler

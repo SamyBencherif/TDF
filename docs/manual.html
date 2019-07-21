@@ -42,32 +42,46 @@ Reason 3.   Can be converted to .txt format without losing information.
 
     <h1>TDF Language and Development Manual</h1>
 
+    <p>
+      <img src="images/cartoons/rocket-flyaround.png" width=100>
+    </p>
+
     <h2>Introduction</h2>
 
     <p>
-    This document contains comprehensive instructions regarding use,
-    development, and implementation of the Test Descriptor Format. This
-    document is required for anyone tasked with developing test and
-    abort sequences, proving TDF code, making use of TDF libraries, or
-    developing mission critical peripheral technologies. Rule of thumb:
-    if your project description includes TDF, this document is for
-    you.
+    This document serves as a guide to all things TDF related. TDF is a
+    format. TDF is a language. TDF is a way of life. Whether you are
+    here to further develop the language, create bindings, or write or
+    prove code in TDF, it is important that you understand all sides of
+    the language. TDF is a domain specific language. That is to say, we
+    forgo some of the advantages of using popular general purpose
+    languages in exchange for a whole slew of special advantages.
+    The reduced feature set will simplify proving code. Licensing
+    issues will not exist and we will not find ourselves relying on
+    code that may seem reliable but actually comes from somewhere
+    unpredictable, such as a nightly build, for random instance. Most
+    importantly, In-house development means our team will have a
+    special intimate knowledge of the language we are using.
+    </p>
+
+    <p>
+      <img src="images/cartoons/tinker-clause.png" width=100>
     </p>
 
     <h2>Table of Contents</h2>
 
     <p>
       <ol>
-        <li> <a href="#naming">Naming Convention</a> </li>
+        <li> <a href="#naming">Naming Conventions</a> </li>
         <li> <a href="#development">Development</a> </li>
-        <li> <a href="#development">Reading and Writing Comments</a> </li>
+        <li> <a href="#comments">Reading and Writing Comments</a> </li>
         <li> <a href="#">Read and Writing Reference Documents</a> </li>
         <li> <a href="#">TDF Language Standard</a> </li>
         <li> <a href="#">Object Model Standard</a> </li>
       </ol>
     </p>
 
-    <h2 id="naming">Naming Convention</h2>
+    <h2 id="naming">Naming Conventions</h2>
 
     <p>
     First a number of points.
@@ -99,13 +113,61 @@ Reason 3.   Can be converted to .txt format without losing information.
       </ol>
     </p>
 
+    <h3>TDF Constructs</h3>
+
+    <p>
+    All TDF keywords and literal values are in full uppercse. Devices
+    are in uppercase. Names for abort sequences can be in any casing,
+    but the casing must be used consistently. Units are always
+    lowecased, to help keep them distinguishable from literals and
+    keywords. TDF constructs that are described in more than one word
+    may be optionally expresed via snake casing (ex: NO_DEVICE). The
+    exception is that keywords, referred to in C under the type name
+    "mode", may NOT contain underscores. Multiple word keywords are
+    simply concatinated (ex: NOOP, LOGMSG, LOGSENSOR).
+    </p>
+
+    <h3>C Constructs</h3>
+
     <p>
     TDF programs are stored in memory and processed in a manner that is
     reminiscent of Object-Orientation. This design choice reduces the
     amount of code that handles bytecode-like objects. Object-
     Orientation structures may or may not be involved in program
     execution. Use of the structures in analysis, profiling, and
-    compilation, however is uncontested.
+    compilation, however is uncontested. Data structures and functions
+    for the TDF program are largely contained in the object-model.h
+    source file. Structures, collections of c-type variables known as
+    fields, are named in lowercase. For example, the data structure
+    that holds a precompiled TDF program is called "program". This name
+    includes a pointer declaration by default. Significant structures
+    in general include a pointer definition in their typedef. functions
+    that belong to a data structure are prefixed with the name of the
+    structure. For example, "program_new" and "program_free", are both
+    functions that belong to the "program" data structure. All
+    functions, structures, and types are named in lowercase.
+    Contrastingly, all enums are in full uppercase. Enums represent
+    literal values or keywords that are used in TDF programs.
+    </p>
+
+    <h3>Filenames</h3>
+
+    <p>
+    Recall that files "README.md" and "Makefile" are named as they are
+    for practical and historical reasons. Other files in the codebase
+    will typically be in "kebab-case", where spaces are replaced with
+    a dash (ascii 0x2d). Some exceptions may be made, for example with
+    "testbed", which is clearly understood as one word, even though it
+    may not appear as a compound-noun in most dictionaries. All source
+    filenames should not any contain uppercase letters.
+    </p>
+
+    <p>
+    File extensions should be lowercase, unless there is a critical
+    reason to do otherwise. Text files should have extensions. Prefer
+    "info.txt" over "info". Avoid uncommon file extenstions such as
+    ".log". Executable files without extenstions are OK on platforms
+    other than windows
     </p>
 
     <h2 id="development">Development</h2>
@@ -117,17 +179,130 @@ Reason 3.   Can be converted to .txt format without losing information.
     completely before moving on to the next reference document. Project
     structure, compilation, development tools, and integration will be
     discussed. Once you have completed this section, see
-    development_status.txt for information about the current steps and
+    development-status.txt for information about the current steps and
     history of development; most recent comments are stored at the top
     of the file.
     </p>
 
     <p>
-    The project root may only contain two files. The README.md and
-    the Makefile. The unusual casing of both these files is
-    intentional.
+    The project root may only contain two files, "README.md" and
+    "Makefile". "README.md" serves as an entry point to a new reader of
+    the codebase. This file must contain instructions for compilation
+    and configuration, reference further documentation, and contain
+    relevant contact information. The file, "Makefile", serves as an
+    entry point for the compiler. Here various build profiles may be
+    specified, including options for different platforms. Build
+    configuration flags may be included as well. For example a build
+    configuration flag could be used to enable a "debug" or
+    "simulation" mode.
     </p>
 
+    <p>
+    Everything else in project root should be a directory. Each
+    directory has a special purpose, detailed as follows.
+    </p>
+
+    <p>
+      <ul>
+        <li>bin: Compiler Output. Binaries and Object Files (.o)</li>
+        <li>docs: Documentation (.txt, .html)</li>
+        <li>include: Header Files (.h)</li>
+        <li>lib: Library Files (.a)</li>
+        <li>src: Source Files (.c)</li>
+        <li>testbed: Test Bed Workspace (.df)</li>
+        <li>vim-TDF: Vim Syntax Support for TDF (.vim)</li>
+      </ul>
+    </p>
+
+    <h2 id="comments">Reading and Writing Comments</h2>
+
+    <p>
+    Every structure or function must be preceeded by a block comment
+    annotation. This annotation must provided information how to use
+    the object and how it works. Annotations are different from
+    reference literature, as not everything makes into the reference.
+    Objects described in the reference documents are intended for
+    external use, whereas annotations cover everything. Entries in the
+    references will obviously be more detailed. Annotations are
+    required before significant structures. Comments that explain the
+    behavior and choices surrounding procedural codes are expected
+    within as well.
+    </p>
+
+    <h3>Annotation Requirements</h3>
+
+    <p>
+    Annotation writing is guided by a template of tagged fields. It is
+    not necessary to specify the types of the arguments, as that is
+    plainly visible from the function header, instead the arguments
+    semantic significance should be revealed. Consider the following
+    example of a block annotation for a function.
+    </p>
+
+    <pre>
+    /* Does math, specifically preforms and returns a sum.
+     * @author Pendleton Ward
+     * @arg x the first number
+     * @arg y the second number
+     * @returns the sum of x and y.
+     */
+    </pre>
+
+    <p>
+    The annotation helps us to understand the function before even
+    seeing the header. Now have a look at the header.
+    </p>
+
+    <pre>
+    int math_add(int x, int y);
+    </pre>
+
+    <p>
+    No surprises there. The definition probably wouldn't be too
+    surprising either. This is how it should be. Nobody likes
+    surprises.
+    </p>
+
+    <p>
+      <img src="images/portal2-chell-surprise.png" width=100>
+    </p>
+
+    <p>
+    A complete function annotation will begin with a description,
+    followed with an "author" tag, supply one "arg" tag for each
+    argument
+    with descriptions, finally a "return" tag includes information
+    about what is being returned.
+
+    The description should detail any side-effects or significant
+    computations as well as explain the general purpose of the
+    function.
+
+
+    The only difference with an struct
+    annotation, besides the lack of a "return" tag, is instead of using
+    "arg" tags, you will use "field" tags to similarly describe the
+    objects. For enums use "val" tags, to describe the significance of
+    each type; let the main description be about the type of the enum.
+    Here are some more examples.
+    </p>
+
+    <pre>
+    /* A person structure is used to keep track of some relevant health
+     * information.
+     * @author J.G. Quintel
+     * @field height how tall a person is, measured in meters
+     * @field mass how matter is in a person, measured in kg
+     * @field bmi Body Mass Index, derived by formula. It's important
+     *        to make sure this value stays updated with the other two.
+     */
+    struct person
+    {
+      float height;
+      float mass;
+      float bmi;
+    }
+    </pre>
 
   </body>
 

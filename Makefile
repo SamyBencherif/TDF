@@ -1,11 +1,7 @@
 
 CC=gcc
-CFLAGS=-std=c89 -Wall -Werror -v
+CFLAGS=-std=c89 -Wall -Werror -Wpendantic -v
 
-# The default build profile is merely a convenience.
-# If this doesn't work on your system, run ``make main''.
-default main.c object-model.h device-config.h:
-	@sh compile.sh
+main main.c object-model.h device-config.h:
+	$(CC) $(CFLAGS) -o main main.c
 
-main:
-	$(CC) $(CFLAGS) main.c -o main

@@ -65,16 +65,16 @@ feedback program_execute(program p)
 {
   /* TRACE_ONLY is the only EXE_MODE ; so this is not actually
    * a programmable mode yet. */
-  printf("Executing program %s. [EXE_MODE=TRACE_ONLY]\n", p->uid);
+  fprintf(stderr, "Executing program %s. [EXE_MODE=ICODE]\n", p->uid);
   assert(p->instruction_index == 0); /* ensure program is reset first */
   while (p->instruction_index < p->instruction_count)
   {
     if (program_step(p) == FAIL)
     {
-      printf("Terminated with errors. Please see logs.\n");
+      printf("\n");
       return FAIL;
     }
   }
-  printf("Terminated with no errors. :)\n");
+  printf("\n");
   return SUCCESS;
 }

@@ -1,0 +1,27 @@
+
+# Tank Pressure Test
+
+# This is a dummy test used to develop and test syntactical
+# features of the language.
+
+ENSURE[N2_PRESSURE > 800 psi; RPI_PRESSURE < 1000 psi;
+       HTP_PRESSURE < 1000 psi] -> simple_abort
+{
+  SET VALVE_N2 OPEN
+  WAIT 1000 ms
+}
+ENSURE[RPI_PRESSURE > 500 psi; HTP_PRESSURE > 500 psi] -> simple_abort
+{
+  WAIT 5000 ms
+}
+SET VALVE_N2 CLOSED
+
+TERMINATE
+
+###
+This is a multiline comment !
+
+So much space to say important things.
+
+Hooray.
+###

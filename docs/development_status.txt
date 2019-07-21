@@ -1,0 +1,13 @@
+Jul 20 2019 [6 lines]
+
+Currently working on documentation. Refactoring is down the road.
+Refactoring step will include removing implementation from header
+files, seperating object creation and linking, use of libraries, and
+use of directories.
+
+Jan 1 1970 [6 lines]
+
+This is an example entry. The blank line above this is required. Lines
+are wrapped at column 72. (ie col 72 should always be blank.) The line-
+count includes the date-line and the blank line that follows it. The
+blank line that precedes date-lines is not counted.

@@ -1,23 +1,27 @@
 
-# Here is a dummy program in the tdf format
+# Tank Pressure Test
 
-# This program does not correspond to any procedures
-# Only keywords, logic, and syntax are authentic.
+# This is a dummy test used to develop and test syntactical
+# features of the language.
 
-SET PRESSURIZER ON
-WAIT 2000ms
-SET PRESSURIZER OFF
-
-ENSURE PRESSURE = 1000psi
-{IF FAIL
-  SET DEPRESSURIZER ON
-  WAIT 3000ms
-  TERMINATE
+ENSURE[N2_PRESSURE > 800 psi; RPI_PRESSURE < 1000 psi;
+       HTP_PRESSURE < 1000 psi] -> simple_abort
+{
+  SET VALVE_N2 OPEN
+  WAIT 1000 ms
 }
-
-PROMPT "Pressure Ready. Commence defibrillation?"
-{WHEN YES
+ENSURE[RPI_PRESSURE > 500 psi; HTP_PRESSURE > 500 psi] -> simple_abort
+{
+  WAIT 5000 ms
 }
-{WHEN NO
-}
+SET VALVE_N2 CLOSED
 
+TERMINATE
+
+###
+This is a multiline comment !
+
+So much space to say important things.
+
+Hooray.
+###

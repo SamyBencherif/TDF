@@ -1,5 +1,13 @@
 <!DOCTYPE html>
+
+<!-- This document is optimized for conversion to text formats, as well
+  as immediate rendering in CLI via Lynx. Consider one of these methods
+  if you wish to simply read the document. -->
+
 <!-- This HTML document is intended to be fully-self contained. -->
+
+<!-- This is a live document. To reference from this document exactly
+  as you see it, keep track of the git commit ID -->
 
 <!--
 When writing in this manual, please adhere to the following
@@ -11,8 +19,11 @@ requirements:
    easily readable.
 4. Do NOT nest bullet points (<li>, <ol>, <ul>).
 5. Use tables sparingly.
-6. Images may be used, but may NOT contain essential information.
+6. Images may be used, but may NOT contain important information.
    Recall not all viewers can render images.
+7. Most content must be contained in paragraph tags.
+8. Do NOT use non-standard html elements such as "code". Use "pre"
+   instead for code formatting.
 
 Rule of Thumb: Avoid features that would not be available in 1990.
 
@@ -20,7 +31,7 @@ Reason 1.   Friendly to our TTY based developers.
 Reason 2.   Compatibility with GH markdown, email, any many other
             hosts.
 Reason 3.   Can be converted to .txt format without losing information.
-            Other formats are supported as well such as .pdf.
+            Other formats, such as pdf, are supported as well.
 -->
 
 <html>
@@ -33,46 +44,90 @@ Reason 3.   Can be converted to .txt format without losing information.
 
     <h2>Introduction</h2>
 
-    <p>This document contains comprehensive instructions regarding use,
+    <p>
+    This document contains comprehensive instructions regarding use,
     development, and implementation of the Test Descriptor Format. This
     document is required for anyone tasked with developing test and
     abort sequences, proving TDF code, making use of TDF libraries, or
     developing mission critical peripheral technologies. Rule of thumb:
     if your project description includes TDF, this document is for
-    you.</p>
+    you.
+    </p>
 
     <h2>Table of Contents</h2>
 
-    <ol>
-      <li> <a href="#development">Development</a> </li>
-      <li> <a href="#important">TDF Language Standard</a> </li>
-      <li> <a href="#important">Object Model Standard</a> </li>
-      <li> <a href="#important">Library Reference</a> </li>
-    </ol>
+    <p>
+      <ol>
+        <li> <a href="#naming">Naming Convention</a> </li>
+        <li> <a href="#development">Development</a> </li>
+        <li> <a href="#development">Reading and Writing Comments</a> </li>
+        <li> <a href="#">Read and Writing Reference Documents</a> </li>
+        <li> <a href="#">TDF Language Standard</a> </li>
+        <li> <a href="#">Object Model Standard</a> </li>
+      </ol>
+    </p>
 
+    <h2 id="naming">Naming Convention</h2>
+
+    <p>
+    First a number of points.
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          Use snake casing.
+        </li>
+        <li>
+          Do NOT use abbrevations for any significant constructs. This
+          includes function names, structure fields, and global
+          variables.
+        </li>
+        <li>
+          Abbreviations may be used sparingly for temporary pointers,
+          such as function arguments where typename is sufficiently
+          descriptive.
+        </li>
+        <li>
+          Do NOT use ambiguous abbreviations. For example "dev" can be
+          short for either "development" or "device".
+        </li>
+        <li>
+          Naming convention does NOT replace documentation and
+          comments.
+        </li>
+      </ol>
+    </p>
+
+    <p>
+    TDF programs are stored in memory and processed in a manner that is
+    reminiscent of Object-Orientation. This design choice reduces the
+    amount of code that handles bytecode-like objects. Object-
+    Orientation structures may or may not be involved in program
+    execution. Use of the structures in analysis, profiling, and
+    compilation, however is uncontested.
+    </p>
 
     <h2 id="development">Development</h2>
 
     <p>
     This manual contains information about development that will remain
     constant throughout the project's lifetime. Standards, practices,
-    will be included here as well.
+    will be included here as well. It is important to read this section
+    completely before moving on to the next reference document. Project
+    structure, compilation, development tools, and integration will be
+    discussed. Once you have completed this section, see
+    development_status.txt for information about the current steps and
+    history of development; most recent comments are stored at the top
+    of the file.
     </p>
 
-    <p>The project root may only contain two files. The Makefile and
+    <p>
+    The project root may only contain two files. The README.md and
+    the Makefile. The unusual casing of both these files is
+    intentional.
+    </p>
 
-
-    <!--
-    Code snippets in this document follow this form. With a required
-    blank starting line. Do NOT use non-standard "code" tags.
-
-    <pre>
-
-    LOC1
-    LOC2
-    LOC3
-    </pre>
-    -->
 
   </body>
 

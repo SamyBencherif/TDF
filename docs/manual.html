@@ -22,7 +22,7 @@ requirements:
 6. Images may be used, but may NOT contain important information.
    Recall not all viewers can render images.
 7. Most content must be contained in paragraph tags.
-8. Do NOT use non-standard html elements such as "code". Use "pre"
+8. Do NOT use non-standard html elements such as 'code'. Use 'pre'
    instead for code formatting.
 
 Rule of Thumb: Avoid features that would not be available in 1990.
@@ -110,6 +110,16 @@ Reason 3.   Can be converted to .txt format without losing information.
           Naming convention does NOT replace documentation and
           comments.
         </li>
+        <li>
+          In documentation and comments, casing of programmatic
+          identifiers should prefer declared casing over grammatic
+          standard. For example a sentence that starts with the name of
+          a variable that is lower cased should begin lower cased.
+          Variable names and other programmatic identifiers should be
+          in single quotes. Filenames are consided like programmatic
+          identifiers. In general if its casing has significance, it is
+          treated like a programmatic identifier.
+        </li>
       </ol>
     </p>
 
@@ -123,7 +133,7 @@ Reason 3.   Can be converted to .txt format without losing information.
     keywords. TDF constructs that are described in more than one word
     may be optionally expresed via snake casing (ex: NO_DEVICE). The
     exception is that keywords, referred to in C under the type name
-    "mode", may NOT contain underscores. Multiple word keywords are
+    'mode', may NOT contain underscores. Multiple word keywords are
     simply concatinated (ex: NOOP, LOGMSG, LOGSENSOR).
     </p>
 
@@ -139,12 +149,12 @@ Reason 3.   Can be converted to .txt format without losing information.
     for the TDF program are largely contained in the object-model.h
     source file. Structures, collections of c-type variables known as
     fields, are named in lowercase. For example, the data structure
-    that holds a precompiled TDF program is called "program". This name
+    that holds a precompiled TDF program is called 'program'. This name
     includes a pointer declaration by default. Significant structures
     in general include a pointer definition in their typedef. functions
     that belong to a data structure are prefixed with the name of the
-    structure. For example, "program_new" and "program_free", are both
-    functions that belong to the "program" data structure. All
+    structure. For example, 'program_new' and 'program_free', are both
+    functions that belong to the 'program' data structure. All
     functions, structures, and types are named in lowercase.
     Contrastingly, all enums are in full uppercase. Enums represent
     literal values or keywords that are used in TDF programs.
@@ -153,11 +163,11 @@ Reason 3.   Can be converted to .txt format without losing information.
     <h3>Filenames</h3>
 
     <p>
-    Recall that files "README.md" and "Makefile" are named as they are
+    Recall that files 'README.md' and 'Makefile' are named as they are
     for practical and historical reasons. Other files in the codebase
     will typically be in "kebab-case", where spaces are replaced with
     a dash (ascii 0x2d). Some exceptions may be made, for example with
-    "testbed", which is clearly understood as one word, even though it
+    'testbed', which is clearly understood as one word, even though it
     may not appear as a compound-noun in most dictionaries. All source
     filenames should not any contain uppercase letters.
     </p>
@@ -165,8 +175,8 @@ Reason 3.   Can be converted to .txt format without losing information.
     <p>
     File extensions should be lowercase, unless there is a critical
     reason to do otherwise. Text files should have extensions. Prefer
-    "info.txt" over "info". Avoid uncommon file extenstions such as
-    ".log". Executable files without extenstions are OK on platforms
+    'info.txt' over 'info'. Avoid uncommon file extenstions such as
+    '.log'. Executable files without extenstions are OK on platforms
     other than windows
     </p>
 
@@ -185,11 +195,11 @@ Reason 3.   Can be converted to .txt format without losing information.
     </p>
 
     <p>
-    The project root may only contain two files, "README.md" and
-    "Makefile". "README.md" serves as an entry point to a new reader of
+    The project root may only contain two files, 'README.md' and
+    'Makefile'. 'README.md' serves as an entry point to a new reader of
     the codebase. This file must contain instructions for compilation
     and configuration, reference further documentation, and contain
-    relevant contact information. The file, "Makefile", serves as an
+    relevant contact information. The file, 'Makefile', serves as an
     entry point for the compiler. Here various build profiles may be
     specified, including options for different platforms. Build
     configuration flags may be included as well. For example a build
@@ -212,6 +222,12 @@ Reason 3.   Can be converted to .txt format without losing information.
         <li>testbed: Test Bed Workspace (.df)</li>
         <li>vim-TDF: Vim Syntax Support for TDF (.vim)</li>
       </ul>
+    </p>
+
+    <h3>Practices</h3>
+
+    <p>
+    All memory management functions must be tested in Valgrind.
     </p>
 
     <h2 id="comments">Reading and Writing Comments</h2>
@@ -240,10 +256,11 @@ Reason 3.   Can be converted to .txt format without losing information.
     </p>
 
     <pre>
-    /* Does math, specifically preforms and returns a sum.
-     * @author Pendleton Ward
-     * @arg x the first number
-     * @arg y the second number
+    /*
+     * Does math, specifically preforms and returns a sum.
+     * @author P. Ward
+     * @param x the first number
+     * @param y the second number
      * @returns the sum of x and y.
      */
     </pre>
@@ -260,7 +277,8 @@ Reason 3.   Can be converted to .txt format without losing information.
     <p>
     No surprises there. The definition probably wouldn't be too
     surprising either. This is how it should be. Nobody likes
-    surprises.
+    surprises. It goes without saying that the author of an
+    annotation must be the person who wrote the corresponding code.
     </p>
 
     <p>
@@ -269,32 +287,41 @@ Reason 3.   Can be converted to .txt format without losing information.
 
     <p>
     A complete function annotation will begin with a description,
-    followed with an "author" tag, supply one "arg" tag for each
+    followed with an @author tag, supply one @param tag for each
     argument
-    with descriptions, finally a "return" tag includes information
+    with descriptions, finally a @return tag includes information
     about what is being returned.
 
     The description should detail any side-effects or significant
     computations as well as explain the general purpose of the
     function.
 
-
     The only difference with an struct
-    annotation, besides the lack of a "return" tag, is instead of using
-    "arg" tags, you will use "field" tags to similarly describe the
-    objects. For enums use "val" tags, to describe the significance of
+    annotation, besides the lack of a @return tag, is instead of using
+    @param tags, you will use @field tags to similarly describe the
+    objects. For enums use @val tags, to describe the significance of
     each type; let the main description be about the type of the enum.
-    Here are some more examples.
+    Here are some more examples. The main description is in written
+    in paragraph form. Tag values are often singleton lists of
+    descriptions. The tag values of W would be written as X, Y, Z where
+    "W is X, W is Y, and W is Z" is a logical sentence describing W.
+    This format encourages brevity and parallel phrasing as well as
+    discorages phrasing such
+    as "X does Y" or "Z is used to do so-and-so". Fields and values do
+    NOT do anything, only functions do. It is important not to cross
+    the concepts of data and routine, especially when the data concerns
+    itself of the routines of a hosted language.
     </p>
 
     <pre>
-    /* A person structure is used to keep track of some relevant health
+    /*
+     * A person structure is used to keep track of some relevant health
      * information.
      * @author J.G. Quintel
      * @field height how tall a person is, measured in meters
      * @field mass how matter is in a person, measured in kg
-     * @field bmi Body Mass Index, derived by formula. It's important
-     *        to make sure this value stays updated with the other two.
+     * @field bmi Body Mass Index, derived by formula, required to be
+     *            updated to correspond with width and height
      */
     struct person
     {

@@ -5,6 +5,22 @@
 
 #include "device-ins.h"
 
+/*
+ * This structure is the memory representation of a TDF program. It
+ * sports a linear array of instructions to be executed in order. It is
+ * important to note that this is the memory representation of a
+ * compiled TDF program, AST is not appropriate here. AST may or may
+ * not be used to generate a hardcoded instance of this structure in
+ * the TDF compiled binary.
+ * @author S. A. Bencherif
+ * @field uid a human readable identifier displayed in reports and user
+ *            interfaces
+ * @field instructions a pointer used to reference the array of
+ *                     instructions
+ * @field instruction_count the size of the array 'instructions'
+ * @field instruction_index the index of the next instruction to
+ *                          execute
+ */
 typedef struct prg {
   char* uid;
   instruction* instructions;
@@ -12,6 +28,13 @@ typedef struct prg {
   int instruction_index;
 } * program;
 
+/*
+ * Creates a null program. NOOP must be added to create a compliant
+ * empty program.
+ * @author S. A. Bencherif
+ * @param uid the program's designated uid
+ * @return the program
+ */
 program program_new(char* uid) {
   program p = malloc(sizeof(struct prg));
   p->instruction_count = 0;
@@ -21,6 +44,11 @@ program program_new(char* uid) {
   return p;
 }
 
+/*
+ * Frees all memory used by a 'program' object.
+ * @author S. A. Bencherif
+ *
+ */
 void program_free(program p) {
   /* free all instructions
   */

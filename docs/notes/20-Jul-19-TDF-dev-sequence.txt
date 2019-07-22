@@ -3,13 +3,13 @@
 
 Jul 21.
 
-- Refactor [4 hrs]
-- Object Model Standard [12 hrs]
+- Refactor [1 wk]
+- Object Model Standard [3 wks]
 
 [ 3 weeks ]
 
 
-- TDF language standard [5 hrs]
+- TDF language standard [1 wk]
 - Transpiler [30 hrs]
 
 [7 weeks]

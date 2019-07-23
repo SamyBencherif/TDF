@@ -1,5 +1,16 @@
 # TDF
 
+### Introduction
+
+Please read the manual. It is available online at
+[https://samybencherif.github.io/TDF/manual.html]
+(https://samybencherif.github.io/TDF/manual.html).
+
+It is also a self contained file located `docs/manual.html`. You can
+use the HTML viewer of your choice. On CLI, Lynx is recommended.
+
+The manual is currently a live document. Please check it regularly.
+
 ### Compile
 
 Mac / Linux / Cygwin
@@ -13,20 +24,6 @@ Windows
 ```
 mingw32-make main
 ```
-
-### Points of Interest
-
-Look at [`main.c`](https://github.com/SamyBencherif/TDF/blob/master/main.c) to see "client-code", where a test program is put together and executed.
-
-Check out [`object-model.h`](https://github.com/SamyBencherif/TDF/blob/master/object-model.h) to see most of the behind the scenes stuff.
-
-Peruse [`device-config.h`](https://github.com/SamyBencherif/TDF/blob/master/device-config.h) to gain an understanding of available test instructions / signals / modes / devices.
-
-Finally, and this one is important for low-level implementation. Have a look at [`device-ins.h`](https://github.com/SamyBencherif/TDF/blob/master/device-ins.h) to see where hardware level code would go.
-
-### TODO / notes
-
-A lot of these header files need to be split into source files which contain implementations and header files that contain function signatures.
 
 ### Contact
 

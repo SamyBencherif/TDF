@@ -47,7 +47,8 @@ program program_new(char* uid) {
 /*
  * Frees all memory used by a 'program' object.
  * @author S. A. Bencherif
- *
+ * @param p the program to free
+ * @return void
  */
 void program_free(program p) {
   /* free all instructions
@@ -60,6 +61,17 @@ void program_free(program p) {
   free(p);
 }
 
+/*
+ * Appends a signal instruction to the end of a program. A signal
+ * instruction is an instruction that sends a signal to a device.
+ * Read more about signals and devices in the documentation.
+ * @author S. A. Bencherif
+ * @param p the program to append to
+ * @param mde the type of instruction
+ * @param s the signal to send
+ * @param d the device to send to
+ * @return void
+ */
 void program_add_signal_ins(program p, mode mde, sig s, device d)
 {
   assert(mde==NOOP || mde==SET || mde==WAIT || mde==ENSURE || mde==LOGSENSOR || mde==TERMINATE); /* If this fails, mode is not signal! */
@@ -71,9 +83,21 @@ void program_add_signal_ins(program p, mode mde, sig s, device d)
   p->instruction_count++;
 }
 
+/*
+ * Appends an instruction that deals in strings instead of signals.
+ * This kind of instruction will only be used for forms of IO. Log
+ * writing and user prompting are both kinds of IO that are used.
+ * @author S. A. Bencherif
+ * @param p the program to append to
+ * @param mde the type of instruction
+ * @param msg the message to send
+ * @param d the device to send to, always a file location or terminal
+ * @return void
+ */
 void program_add_message_ins(program p, mode mde, char* msg, device d)
 {
-  assert(mde==PROMPT || mde==LOGMSG); /* If this fails, mode is not message! */
+  /* If this fails, mode is not message! */
+  assert(mde==PROMPT || mde==LOGMSG);
   p->instructions = realloc(p->instructions, p->instruction_count+1);
   p->instructions[p->instruction_count] = malloc(sizeof(struct ins));
   p->instructions[p->instruction_count]->ins_mode = mde;
@@ -82,6 +106,13 @@ void program_add_message_ins(program p, mode mde, char* msg, device d)
   p->instruction_count++;
 }
 
+/*
+ * Executes one instruction from a program and increments its
+ * instruction index. Programs are stateful, and must be reset after
+ * each run.
+ * @param p the program to step
+ * @return feedback for this specific step
+ */
 feedback program_step(program p)
 {
   feedback f = devices_send_ins(p->instructions[p->instruction_index]);
@@ -89,12 +120,21 @@ feedback program_step(program p)
   return f;
 }
 
+/*
+ * Executes an entire program. The program must be reset first.
+ * instruction_count must be correct or behavior will be UNDEFINED.
+ * @param p the program to be run
+ * @return feedback for the overall execution
+ */
 feedback program_execute(program p)
 {
   /* TRACE_ONLY is the only EXE_MODE ; so this is not actually
    * a programmable mode yet. */
-  fprintf(stderr, "Executing program %s. [EXE_MODE=ICODE]\n", p->uid);
-  assert(p->instruction_index == 0); /* ensure program is reset first */
+  fprintf(stderr, "Executing program %s. [EXE_MODE=TRACE_ONLY]\n",
+      p->uid);
+
+  /* ensure program is reset first */
+  assert(p->instruction_index == 0);
   while (p->instruction_index < p->instruction_count)
   {
     if (program_step(p) == FAIL)

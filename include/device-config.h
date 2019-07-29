@@ -57,6 +57,20 @@ typedef enum {NOOP, SET, WAIT, ENSURE, PROMPT, LOGMSG, LOGSENSOR,
 typedef enum {NULL_SIG, ON, OFF, OPEN, CLOSED} sig;
 
 /*
+ * A unit is associated with a value. A value is an integer that
+ * represents a physical quantity. For example a value can specify
+ * temperature, pressure, or duration. For each of those quantities,
+ * respectively some examples of units are Kelvin, Pascals, and
+ * MilliSeconds. Abbreviations are not allowed here. Units are in full-
+ * upper case. Exercise extreme caution in selecting the correct unit.
+ * @author S. A. Bencherif
+ * @val MILLISECONDS one one-thousandth of a second
+ */
+typedef enum {
+  MILLISECONDS
+} unit;
+
+/*
  * Quick feedback to be sent to the operator. Unlike a prompt it does
  * not require input, and it always occurs after a test is complete.
  * Unlike a log, the information is extremely brief and must be
@@ -83,7 +97,7 @@ typedef enum {SUCCESS, FAIL, CHECKLOG} feedback;
  */
 typedef struct ins {
   mode ins_mode;
-  union {sig signal; char* message;};
+  union Contents {sig signal; char* message;} contents;
   device dev_id;
 
   /*

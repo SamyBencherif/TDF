@@ -35,7 +35,15 @@ typedef struct prg {
  * @param uid the program's designated uid
  * @return the program
  */
-program program_new(char* uid);
+program program_new(char* uid)
+{
+  program p = malloc(sizeof(struct prg));
+  p->instruction_count = 0;
+  p->instruction_index = 0;
+  p->instructions = NULL;
+  p->uid = uid;
+  return p;
+}
 
 /*
  * Frees all memory used by a 'program' object.
@@ -43,7 +51,17 @@ program program_new(char* uid);
  * @param p the program to free
  * @return void
  */
-void program_free(program p);
+void program_free(program p) {
+  /* free all instructions
+  */
+  int i;
+  for (i=0; i < p->instruction_count; i++)
+  {
+    free(p->instructions[i]);
+  }
+
+  free(p);
+}
 
 /*
  * Appends a signal instruction to the end of a program. A signal
@@ -56,7 +74,16 @@ void program_free(program p);
  * @param d the device to send to
  * @return void
  */
-void program_add_signal_ins(program p, mode mde, sig s, device d);
+void program_add_signal_ins(program p, mode mde, sig s, device d)
+{
+  assert(mde==NOOP || mde==SET || mde==WAIT || mde==ENSURE || mde==LOGSENSOR || mde==TERMINATE); /* If this fails, mode is not signal! */
+  p->instructions = realloc(p->instructions, p->instruction_count+1);
+  p->instructions[p->instruction_count] = malloc(sizeof(struct ins));
+  p->instructions[p->instruction_count]->ins_mode = mde;
+  p->instructions[p->instruction_count]->contents.signal = s;
+  p->instructions[p->instruction_count]->dev_id = d;
+  p->instruction_count++;
+}
 
 /*
  * Appends an instruction that deals in strings instead of signals.
@@ -69,7 +96,17 @@ void program_add_signal_ins(program p, mode mde, sig s, device d);
  * @param d the device to send to, always a file location or terminal
  * @return void
  */
-void program_add_message_ins(program p, mode mde, char* msg, device d);
+void program_add_message_ins(program p, mode mde, char* msg, device d)
+{
+  /* If this fails, mode is not message! */
+  assert(mde==PROMPT || mde==LOGMSG);
+  p->instructions = realloc(p->instructions, p->instruction_count+1);
+  p->instructions[p->instruction_count] = malloc(sizeof(struct ins));
+  p->instructions[p->instruction_count]->ins_mode = mde;
+  p->instructions[p->instruction_count]->contents.message = msg;
+  p->instructions[p->instruction_count]->dev_id = d;
+  p->instruction_count++;
+}
 
 /*
  * Executes one instruction from a program and increments its
@@ -78,7 +115,12 @@ void program_add_message_ins(program p, mode mde, char* msg, device d);
  * @param p the program to step
  * @return feedback for this specific step
  */
-feedback program_step(program p);
+feedback program_step(program p)
+{
+  feedback f = devices_send_ins(p->instructions[p->instruction_index]);
+  p->instruction_index++;
+  return f;
+}
 
 /*
  * Executes an entire program. The program must be reset first.
@@ -86,4 +128,23 @@ feedback program_step(program p);
  * @param p the program to be run
  * @return feedback for the overall execution
  */
-feedback program_execute(program p);
+feedback program_execute(program p)
+{
+  /* TRACE_ONLY is the only EXE_MODE ; so this is not actually
+   * a programmable mode yet. */
+  fprintf(stderr, "Executing program %s. [EXE_MODE=TRACE_ONLY]\n",
+      p->uid);
+
+  /* ensure program is reset first */
+  assert(p->instruction_index == 0);
+  while (p->instruction_index < p->instruction_count)
+  {
+    if (program_step(p) == FAIL)
+    {
+      printf("\n");
+      return FAIL;
+    }
+  }
+  printf("\n");
+  return SUCCESS;
+}

@@ -10,18 +10,21 @@
  */
 int main()
 {
-  program myProg = program_new("TESTBED TEST #2 (LED BLINK)");
+  program myProg = program_new("TESTBED TEST #3 (LED BLINK)");
 
-  program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
-  program_add_signal_ins(myProg, SET, ON, TESTLED);
+  /* change in progress to granular wait times
+  //program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
+  //program_add_signal_ins(myProg, SET, ON, TESTLED);
 
-  program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
-  program_add_signal_ins(myProg, SET, OFF, TESTLED);
+  //program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
+  //program_add_signal_ins(myProg, SET, OFF, TESTLED);
 
-  program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
-  program_add_signal_ins(myProg, SET, ON, TESTLED);
+  //program_add_signal_ins(myProg, WAIT, 1000_MS, TESTLED);
+  //program_add_signal_ins(myProg, SET, ON, TESTLED);
+  */
 
-  feeback status = program_execute(myProg);
+  feedback status;
+  status = program_execute(myProg);
 
   program_free(myProg);
 

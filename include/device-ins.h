@@ -10,16 +10,4 @@
  *          immediate execution
  * @return a feedback status to be interpreted by the main program
  */
-feedback devices_send_ins(instruction i)
-{
-
-  /*
-   * In lieu of implementations the program write to STDOUT. This
-   * function is useful for runtime profiling tools. In future versions
-   * that have implementations, a compile flag will be available that
-   * will restrict the program to only generating output like this.
-   */
-  printf("%02x%02x%02x", i->ins_mode, i->signal, i->dev_id);
-  return SUCCESS;
-
-}
+feedback devices_send_ins(instruction i);

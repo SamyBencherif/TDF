@@ -1,7 +1,8 @@
+CC=gcc#
+CFLAGS=-std=c89 -Wall -Werror -Wpedantic -v#
+AR=ar#
+ARFLAGS=-rs#
 
-CC=gcc
-CFLAGS=-std=c89 -Wall -Werror -Wpendantic -v
-
-main main.c object-model.h device-config.h:
-	$(CC) $(CFLAGS) -o main main.c
-
+main src/* include/*:
+	$(CC) $(CFLAGS) -Iinclude -o bin/main src/main.c \
+									src/object-model.c src/device-ins.c

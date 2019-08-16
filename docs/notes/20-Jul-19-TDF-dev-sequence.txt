@@ -1,20 +1,30 @@
+Jul 14
 
 - Documentation [4 hrs] [1 wk]
 
-Jul 21.
+Jul 21
 
 - Refactor [1 wk]
+
+Jul 28
+
 - Object Model Standard [3 wks]
 
-[ 3 weeks ]
-
+Aug 19
 
 - TDF language standard [1 wk]
-- Transpiler [30 hrs]
 
-[7 weeks]
+Aug 26
+
+- Transpiler [6 wks]
 
 Oct 1.
+
+- Additional Maintenance
+
+Oct 6. Transpiler
+
+Other notes:
 
 - Code Analysis Suite (Visuals Generation, Code Validation)
 - Shared Library
@@ -23,6 +33,3 @@ Oct 1.
   - gives information about test
   - lets you pick test
   - interaction with prompts
-
-
-Oct 6. Transpiler

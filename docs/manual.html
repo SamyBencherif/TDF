@@ -28,7 +28,7 @@ requirements:
 Rule of Thumb: Avoid features that would not be available in 1990.
 
 Reason 1.   Friendly to our TTY based developers.
-Reason 2.   Compatibility with GH markdown, email, any many other
+Reason 2.   Compatibility with GH markdown, email, and many other
             hosts.
 Reason 3.   Can be converted to .txt format without losing information.
             Other formats, such as pdf, are supported as well.
@@ -75,9 +75,9 @@ Reason 3.   Can be converted to .txt format without losing information.
         <li> <a href="#naming">Naming Conventions</a> </li>
         <li> <a href="#development">Development</a> </li>
         <li> <a href="#comments">Reading and Writing Comments</a> </li>
-        <li> <a href="#">Read and Writing Reference Documents</a> </li>
-        <li> <a href="#">TDF Language Standard</a> </li>
-        <li> <a href="#">Object Model Standard</a> </li>
+        <li> Read and Writing Reference Documents </li>
+        <li> TDF Language Standard </li>
+        <li> <a href="#obj-mdl"> The Object Model Standard </a> </li>
         <li> <a href="#integrity">Abort Sequences, Manual Termination, and
             Integrity Checks</a> </li>
       </ol>
@@ -163,6 +163,10 @@ Reason 3.   Can be converted to .txt format without losing information.
     </p>
 
     <h3>Filenames</h3>
+
+    <p>
+      <img src="images/cartoons/terminal-rename.png" width=100>
+    </p>
 
     <p>
     Recall that files 'README.md' and 'Makefile' are named as they are
@@ -326,7 +330,7 @@ Reason 3.   Can be converted to .txt format without losing information.
      * information.
      * @author J.G. Quintel
      * @field height how tall a person is, measured in meters
-     * @field mass how matter is in a person, measured in kg
+     * @field mass how much matter is in a person, measured in kg
      * @field bmi Body Mass Index, derived by formula, required to be
      *            updated to correspond with width and height
      */
@@ -337,6 +341,61 @@ Reason 3.   Can be converted to .txt format without losing information.
       float bmi;
     }
     </pre>
+
+    <h2 id="obj-mdl"> The Object Model Standard </h2>
+
+    <i><pre>
+    arms and legs stretch beyond sight
+    across the sand
+    and wings in the sea's immediacy
+    and voices along the edges of direction
+
+    2 - Arcangelo - Micheal Dransfield
+    </pre></i>
+
+    <p>
+    This section describes the needs, manner, and form of the
+    Object Model Standard. While the TD language aims to be easily
+    read and written by humans, the Object Model aims to be simple
+    to programmatically generate and interface with embedded
+    software code. The Object Model is a particular form of C function.
+    The C function shall contain no loops. It would, in fact, look
+    quite repetitive to the human reader. Take the following TD code.
+    </p>
+
+    <pre>
+    invariant
+    before: X &lt; 100;
+    during: after:
+    20 &lt; y,
+    y &lt; 50;
+    {
+        wait 1000 ms
+        set led on;
+        wait 1000 ms
+        set led off;
+    }
+    </pre>
+
+    <p>
+    The resulting C code.
+    </p>
+
+    <pre>
+    if (!(X &lt; 100)) simple_abort();
+    sleepMS(1000)
+    if (!(20 &lt; y &amp;&amp; y &lt; 50)) simple_abort();
+    set(LED, ON);
+    if (!(20 &lt; y &amp;&amp; y &lt; 50)) simple_abort();
+    sleepMS(1000)
+    if (!(20 &lt; y &amp;&amp; y &lt; 50)) simple_abort();
+    set(LED, 1000)
+    if (!(20 &lt; y &amp;&amp; y &lt; 50)) simple_abort();
+    </pre>
+
+    <p>
+    NTS, current OM code uses data structures to represent code, however, using a flat C function may make more sense.
+    </p>
 
     <h2 id="integrity"> Abort Sequences, Manual Termination, and
         Integrity Checks </h2>

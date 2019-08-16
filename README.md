@@ -3,8 +3,7 @@
 ### Introduction
 
 Please read the manual. It is available online at
-[https://samybencherif.github.io/TDF/manual.html]
-(https://samybencherif.github.io/TDF/manual.html).
+https://samybencherif.github.io/TDF/manual.html.
 
 It is also a self contained file located `docs/manual.html`. You can
 use the HTML viewer of your choice. On CLI, Lynx is recommended.

@@ -3,8 +3,8 @@
  * Using a C enum for this is essential as it only allows certain
  * literal values for the device type. A variable of type device
  * signifies a physical device, the pins to interact with this device
- * are decided in a configuration header file. Obviously, the
- * configuration must be checked against the wiring regularly.
+ * are decided in device-ins.c file. Obviously, the configuration must
+ * be checked against the wiring regularly.
  * @author S. A. Bencherif
  * @val NO_DEVICE an inconsequential device useful for testing or NOOP
  *                operations

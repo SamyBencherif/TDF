@@ -192,9 +192,92 @@ as so:
                          [check invariants]   [check invariants]
 </pre>
 
-<p>Adjusted time partitioning is the practice of...</p>
+<p>
+Adjusted time partitioning is the practice of preforming the
+first partition of, say a third the wait time, measuring the total
+time of the first third plus the amount of time it takes to
+preform the first invariant test, then taking the total desired
+wait time minus this elapsed time, and now splitting it in half.
+The process caries on in this manner. So, to wait 3000 ms:
+</p>
 
-NTS: intermediary linerized code, that can be validated
+<pre>
+     |___wait 1000 ms___| &lt; [check elapsed] ...
+    ^                    ^
+    [start timer]        [check invariants]
+</pre>
+
+<p>
+Say that took 1045 ms to complete. Now we have (3000-1045) = 1955 ms
+left to wait. We then divide this job of waiting into two pieces.
+Now (1955/2) = 977.5 ms of waiting remains. Here I show our timed
+totals, starring the steps whose duration we do not control:
+</p>
+
+<pre>
+    [wait: 1000 ms][*check: 45 ms][wait: 977.5 ms][*check: 16ms]
+</pre>
+
+<p>
+And so the final wait time can be calculated to be (3000 - 2038.5) =
+961.5 ms. As you can see, We can correct completely for <i>invariant
+testing latency</i> as long as a final check at the end of the wait
+can be forgone and the number of time partitions is not overly
+ambitious. (Time Total / Partition Count should be &gt;&gt; max
+invariant test latency.) Thanks to the inclusion of <i>Invariant
+Subcategories</i> the TD programmer can have minimal influence of when
+these tests are preformed.
+</p>
+
+<h4>3: Invariant Subcategories</h4>
+
+<p>
+This term refers to the inclusion of specific invariant types
+such as 'before', 'during', and 'after', which specify invariant
+test occurence relative to an 'invariant' block in a TD program. For
+example (TD pseudocode):
+</p>
+
+<pre>
+    invariant
+    before: during:
+    moon_radius &gt; 500 m, earth_mass &lt; 1e9 kg,
+    0 &lt; time, time &lt; 3000 ms;
+    after:;
+    {
+        set valve open
+        wait 3000 ms
+    }
+    invariant
+    before: during:;
+    after:
+    time &lt; 3500 ms;
+    {
+        set valve closed;
+    }
+
+</pre>
+
+<p>
+This program makes use of invariant subcategory keywords to specify
+that no invariant testing should occur between blocks 1 and 2. This
+strategy is to be employed when precision in wait time is important
+enough to forgo a system integrity check (invariant test). Try to use
+this method sparingly.
+</p>
+
+<h4> Closing  </h4>
+
+<p>
+Because this revision eliminates the abstract memory model formerly
+used in favor of a more 'linear' model. It is no longer possible
+(reasonable) to run validation tests on compiled TD programs. As a
+result it is worth considering introducing a linearized intermediary
+format intended for use with code testing software. Alternatively, (or
+additionally) it is possible to profile using dummy implementations of
+hardware interface code. These next considerations will come into play
+during the conception of the TD language standard and TD compiler.
+</p>
 
 </body>
 </html>

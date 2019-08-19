@@ -1,0 +1,46 @@
+
+# Rewrite of 'Tank Pressure Test'
+
+define pressure_max 1000 psi;
+define pressure_min 990 psi;
+
+invariant
+before:
+    n2_pressure > 800 psi,
+during: after:
+    rpi_pressure < [pressure_max],
+    htp_pressure < [pressure_max];
+{
+    set valve_n2 open;
+    wait 1000 ms;
+} -> simple_abort;
+
+invariant
+before: during: after:
+    rpi_pressure > [pressure_min],
+    htp_pressure > [pressure_min];
+{
+    wait 5000 ms;
+    set valve_ns closed;
+} -> simple_abort;
+
+###
+In lieu of "terminate" keyword, I've decided on a checksum feature.
+It works like this. We have 3 assigned code reviewers, Bob, Alice,
+and Charlie. Bob will review the program, and if it is to his liking,
+He will run a checksum on the program, and append the signature line.
+The checksum consists of a cryptographic hash of the source code,
+salted by Bob's memorized secret code word. Alice will do the same,
+signing the source including bob's signature, this new signature
+would have been cryptographically non-trivial (impossible) for Alice
+to create without Bob's signature first, however the order of signing
+does not matter. This is to prevent situations were someone obtains
+a real signature from Alice by providing her a source file with a
+conterfeit signature from Bob. Finally, a secure machine containing
+all the code words will validate all the checksums before allowing
+compilation.
+###
+
+signed <user1> <checksum1>
+signed <user2> <checksum2>
+signed <user3> <checksum3>

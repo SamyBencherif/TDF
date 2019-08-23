@@ -1,4 +1,10 @@
-Jul 22 2019 [ lines]
+Aug 21 2019 [5 lines]
+
+Manual is a work in progress. Specification for the object model exists
+as a collection of 3 marked revisions. The TD specification is planned
+to drop the 26th.
+
+Jul 22 2019 [6 lines]
 
 Set up Github milestones to organize issues and keep track of long
 term progress. There will be some overlap between this document and
